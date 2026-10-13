@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 坦克大战 (Tank Battle)
 
-## Getting Started
+基于 **Next.js 16 + React 19 + Canvas 2D** 实现的经典坦克大战游戏，无需任何图片/音频素材，全部图形与音效均实时生成。
 
-First, run the development server:
+## 快速开始
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # 打开 http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+生产构建：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build && npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 操作方式
 
-## Learn More
+| 操作 | 键盘 | 触屏 |
+| --- | --- | --- |
+| 移动 | `←` `↑` `↓` `→` / `W` `A` `S` `D` | 左侧方向盘 |
+| 开火 | `空格` / `J` | 右侧开火键 |
+| 暂停 | `P` | 「暂停」按钮 |
+| 开始 / 继续 | `Enter` | 点击按钮 |
 
-To learn more about Next.js, take a look at the following resources:
+## 玩法
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 保护己方基地（金色老鹰），消灭本关全部 16 辆敌方坦克即可过关，共 **3 关**。
+- 砖墙可被击碎，钢墙只有升到 2 级火力才能击穿；河流阻挡坦克但子弹可穿过；树林可通行并遮挡视线。
+- 击毁**闪红光**的坦克会掉落道具：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  | 道具 | 效果 |
+  | --- | --- |
+  | ★ | 火力升级（1 级双发、2 级可破钢墙、3 级射速提升） |
+  | ◎ | 护盾，短时间无敌 |
+  | ✸ | 全屏歼灭场上敌人 |
+  | ♥ | 增加一条命 |
+  | ❄ | 冻结敌人 8 秒 |
+  | ⛏ | 基地周围砖墙临时变为钢墙 |
 
-## Deploy on Vercel
+- 敌方坦克共 4 种：普通、快速、强力（2 血）、装甲（4 血，血量越少颜色越深）。
+- 生命耗尽或基地被摧毁即游戏结束，最高分保存在 `localStorage`。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 代码结构
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── globals.css          # 全局暗色主题
+│   ├── layout.tsx           # 根布局与元信息
+│   └── page.tsx             # 页面入口
+├── components/
+│   ├── TankGame.tsx         # React 外壳：画布、主循环、输入、HUD、覆盖层
+│   └── TankGame.module.css  # 组件样式（含移动端触屏按键）
+└── game/
+    ├── constants.ts         # 尺寸、格子类型、关卡参数
+    ├── levels.ts            # 3 张字符画关卡地图与解析
+    ├── engine.ts            # 游戏引擎：状态机、坦克/子弹/道具、碰撞、AI
+    ├── render.ts            # Canvas 渲染：地形、坦克、爆炸、特效
+    └── sound.ts             # WebAudio 合成音效
+```
+
+### 实现要点
+
+- **固定步长模拟**：主循环用累加器以 `1/60s` 固定步长推进逻辑，渲染与逻辑解耦，不同刷新率手感一致。
+- **碰撞系统**：坦克与地形/坦克做 AABB 检测，被挡住时自动向格子中线对齐，避免卡墙角；子弹分步推进防止高速穿墙。
+- **敌人 AI**：随机游走 + 追击玩家/基地，与目标同轴时优先开火，被挡住时立即改变方向。
+- **渲染**：全部程序化绘制（砖块、钢墙、动态水面、树叶、旋转履带、径向渐变爆炸、护盾光环、冰冻粒子），并支持 `devicePixelRatio` 高清显示。
+- **音效**：使用 `OscillatorNode` + `GainNode` 合成射击、爆炸、拾取等音效，无外部资源。
+
+## 技术栈
+
+Next.js 16（App Router）· React 19 · TypeScript · Canvas 2D · WebAudio

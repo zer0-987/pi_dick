@@ -1,0 +1,292 @@
+.wrapper {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------------------------- HUD ---------------------------- */
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(28, 36, 46, 0.95), rgba(16, 22, 30, 0.95));
+  border: 1px solid rgba(120, 200, 255, 0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.hudGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hudLabel {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #7d8b99;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hudValue {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #d7f0ff;
+  text-shadow: 0 0 8px rgba(90, 200, 255, 0.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dim {
+  color: #5c6b7a;
+  font-style: normal;
+  font-size: 12px;
+}
+
+/* ---------------------------- 战场 ---------------------------- */
+
+.stageWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(120, 200, 255, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6) inset,
+    0 12px 32px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(60, 140, 220, 0.15);
+  background: #0b0f14;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+/* ---------------------------- 覆盖层 ---------------------------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(6, 10, 14, 0.72);
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.18s ease-out;
+}
+
+.overlayCard {
+  text-align: center;
+  padding: 22px 26px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(24, 32, 42, 0.98), rgba(12, 17, 23, 0.98));
+  border: 1px solid rgba(120, 200, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  max-width: 320px;
+}
+
+.overlayTitle {
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  color: #ffe680;
+  text-shadow: 0 0 14px rgba(255, 214, 80, 0.45);
+  margin-bottom: 10px;
+}
+
+.overlayText {
+  font-size: 13px;
+  color: #a9b7c4;
+  line-height: 1.7;
+}
+
+.primaryButton {
+  margin-top: 16px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #06202b;
+  background: linear-gradient(180deg, #9fe4ff, #48b7e6);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(72, 183, 230, 0.35);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.primaryButton:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.primaryButton:active {
+  transform: translateY(1px);
+}
+
+/* ---------------------------- 工具栏 ---------------------------- */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.toolButton {
+  flex: 1 1 120px;
+  padding: 9px 14px;
+  font-size: 13px;
+  color: #cfe6f5;
+  background: rgba(30, 40, 52, 0.9);
+  border: 1px solid rgba(120, 200, 255, 0.22);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.toolButton:hover {
+  background: rgba(44, 60, 78, 0.95);
+  border-color: rgba(120, 200, 255, 0.45);
+}
+
+.toolButton:active {
+  transform: translateY(1px);
+}
+
+/* ---------------------------- 触屏按键 ---------------------------- */
+
+.touchPad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 4px 8px 0;
+}
+
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(3, 52px);
+  gap: 4px;
+}
+
+.padButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #d5ecfa;
+  background: rgba(34, 46, 60, 0.92);
+  border: 1px solid rgba(120, 200, 255, 0.25);
+  border-radius: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: pointer;
+  transition: background 0.1s ease, transform 0.1s ease;
+}
+
+.padButton:active {
+  background: rgba(70, 140, 190, 0.9);
+  transform: scale(0.96);
+}
+
+.padUp {
+  grid-column: 2;
+  grid-row: 1;
+}
+.padLeft {
+  grid-column: 1;
+  grid-row: 2;
+}
+.padRight {
+  grid-column: 3;
+  grid-row: 2;
+}
+.padDown {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.fireButton {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #2a1005;
+  background: radial-gradient(circle at 35% 30%, #ffd27a, #f08a3c 65%, #c4611f);
+  border: 1px solid rgba(255, 220, 160, 0.6);
+  box-shadow: 0 8px 20px rgba(240, 138, 60, 0.35);
+}
+
+.fireButton:active {
+  background: radial-gradient(circle at 35% 30%, #ffe6a8, #ff9a4a 65%, #d9701f);
+}
+
+/* ---------------------------- 说明 ---------------------------- */
+
+.help {
+  font-size: 12px;
+  color: #8695a3;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.help strong {
+  color: #b9d6e8;
+}
+
+.tip {
+  color: #6d7c8a;
+  margin-top: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dpad {
+    grid-template-columns: repeat(3, 46px);
+    grid-template-rows: repeat(3, 46px);
+  }
+  .fireButton {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .touchPad {
+    display: none;
+  }
+}
